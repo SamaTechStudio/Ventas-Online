@@ -499,7 +499,16 @@
       cursor:pointer;
       box-shadow: 0 12px 30px rgba(212, 92, 153, 0.18);
     }
-    
+
+    button.loading{
+      background: #bdbdbd !important;
+      color: #ffffff;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none !important;
+      opacity: 0.85;
+    }
+        
     .btn-logout{
       background: #e53935;
       color: white;
@@ -523,14 +532,19 @@
       min-height: 20px;
     }
 
-    #togglePassword {
+    #togglePassword{
       position: absolute;
-      right: 12px;
+      right: 14px;
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      user-select: none;
       color: var(--muted);
+      font-size: 1rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
     }
   </style>
 </head>
@@ -775,6 +789,7 @@
       // 🔥 estado loading en botón
       btn.disabled = true;
       btn.textContent = "Validando...";
+      btn.classList.add("loading");
     
       try {
         const { data, error } = await window.supabaseClient
@@ -809,6 +824,7 @@
       } finally {
         btn.disabled = false;
         btn.textContent = "Ingresar";
+        btn.classList.remove("loading");
       }
     }
     
