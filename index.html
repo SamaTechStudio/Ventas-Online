@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Filtros de Instagram — packs y efectos por @luna.vega" />
+  <title>Luna Vega · Filtros Instagram</title>
+  <link rel="stylesheet" href="css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #faf7fb;
+      --bg-elevated: rgba(255, 255, 255, 0.78);
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --text: #2b2230;
+      --muted: #6b5f73;
+      --accent: #e879a9;
+      --accent-2: #c9a8e8;
+      --accent-soft: #fce4ef;
+      --border: rgba(43, 34, 48, 0.08);
+      --border-strong: rgba(43, 34, 48, 0.14);
+      --shadow-sm: 0 10px 30px rgba(43, 34, 48, 0.04);
+      --shadow-md: 0 18px 50px rgba(43, 34, 48, 0.08);
+      --radius: 22px;
+      --radius-sm: 16px;
+      --radius-pill: 980px;
+      --max: 500px;
+      --max-wide: 1120px;
+      --grid-products-bp: 960px;
+      --whatsapp: #25d366;
+      --blur: 20px;
+      --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+      --ease-spring: cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+      font-feature-settings: "ss01" on, "cv11" on;
+      color: var(--text);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(1200px 600px at 50% -10%, #fce4ef 0%, transparent 55%),
+        radial-gradient(800px 400px at 100% 20%, rgba(201, 168, 232, 0.25) 0%, transparent 50%);
+      min-height: 100dvh;
+      line-height: 1.47059;
+      letter-spacing: -0.022em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      width: 100%;
+      max-width: min(var(--max), 100% - 2rem);
+      margin-inline: auto;
+      padding: 2.75rem max(1rem, env(safe-area-inset-left)) 6rem max(1rem, env(safe-area-inset-right));
+      box-sizing: border-box;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 0.25rem 0 1.5rem;
+    }
+
+    .avatar {
+      width: 104px;
+      height: 104px;
+      border-radius: 50%;
+      margin: 0 auto 1.25rem;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: var(--shadow-md);
+      transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+    }
+
+    .avatar:hover {
+      transform: scale(1.03);
+      box-shadow: 0 22px 60px rgba(232, 121, 169, 0.25);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      border: 3px solid #fff;
+    }
+
+    .name {
+      font-size: clamp(1.875rem, 5.5vw, 2.25rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin: 0 0 0.5rem;
+    }
+
+    .tagline {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin: 0 0 1rem;
+    }
+
+    .bio {
+      margin: 0 auto 1.5rem;
+      max-width: 36ch;
+      color: var(--muted);
+      font-size: 1.0625rem;
+      font-weight: 400;
+      letter-spacing: -0.018em;
+      line-height: 1.5;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.78rem 1.5rem;
+      min-height: 48px;
+      border-radius: var(--radius-pill);
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: -0.015em;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition:
+        transform 0.35s var(--ease-spring),
+        box-shadow 0.35s var(--ease-out),
+        background 0.25s var(--ease-out),
+        border-color 0.25s var(--ease-out),
+        opacity 0.2s ease;
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn-ig {
+      background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+      color: #fff;
+      box-shadow: none;
+    }
+
+    .btn-ig:hover {
+      transform: translateY(-1px);
+      box-shadow: none;
+    }
+
+    .btn-tiktok {
+      background: #000;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+    }
+
+    .btn-tiktok:hover {
+      transform: translateY(-1px);
+      box-shadow: none;
+    }
+
+    .btn-facebook {
+      background: #1877F2;
+      color: #fff;
+      box-shadow: none;
+    }
+
+    .btn-facebook:hover {
+      transform: translateY(-1px);
+      box-shadow: none;
+    }
+
+    .btn-social {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      min-width: 48px;
+      height: 48px;
+      padding: 0;
+      margin: 0 0.35rem;
+      border-radius: 999px;
+      gap: 0;
+      box-shadow: none;
+    }
+
+    .btn.btn-social i {
+      margin: 0;
+      font-size: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      line-height: 1;
+    }
+
+    .btn-ghost {
+      background: var(--bg-elevated);
+      backdrop-filter: saturate(180%) blur(var(--blur));
+      -webkit-backdrop-filter: saturate(180%) blur(var(--blur));
+      border-color: var(--border-strong);
+      color: var(--text);
+    }
+
+    .btn-ghost:hover {
+      background: #fff;
+      border-color: rgba(232, 121, 169, 0.35);
+      box-shadow: var(--shadow-md);
+    }
+
+    .section-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 0 0 0.35rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.028em;
+      line-height: 1.15;
+      margin: 0 0 1.125rem;
+    }
+
+    .section-head {
+      margin: 2.75rem 0 1.125rem;
+    }
+
+    .grid-products {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(0.875rem, 3.5vw, 1.25rem);
+      align-items: stretch;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      height: 100%;
+      background: var(--bg-card);
+      backdrop-filter: saturate(180%) blur(var(--blur));
+      -webkit-backdrop-filter: saturate(180%) blur(var(--blur));
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition:
+        transform 0.45s var(--ease-out),
+        box-shadow 0.45s var(--ease-out),
+        border-color 0.35s var(--ease-out);
+    }
+
+    .card:hover {
+      transform: translateY(-2px) scale(1.005);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(232, 121, 169, 0.2);
+    }
+
+    .card-preview {
+      aspect-ratio: 4 / 3;
+      background: linear-gradient(145deg, #fce4ef, #efe6fb);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.65s var(--ease-out);
+    }
+
+    .card:hover .card-preview img {
+      transform: scale(1.03);
+    }
+
+    .card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(1rem, 3.5vw, 1.125rem) clamp(1rem, 3.5vw, 1.25rem) clamp(1rem, 3.5vw, 1.25rem);
+    }
+
+    .card-title {
+      font-weight: 600;
+      font-size: 1.125rem;
+      letter-spacing: -0.022em;
+      margin: 0 0 0.25rem;
+    }
+
+    .card-price {
+      font-weight: 600;
+      font-size: 1.125rem;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+      margin: 0 0 0.65rem;
+    }
+
+    .card-desc {
+      flex: 1;
+      margin: 0 0 1rem;
+      font-size: clamp(0.875rem, 2.8vw, 0.9375rem);
+      color: var(--muted);
+      letter-spacing: -0.011em;
+      line-height: 1.5;
+    }
+
+    .btn-buy {
+      width: 100%;
+      margin-top: auto;
+      min-height: 48px;
+      background: linear-gradient(135deg, var(--accent), #f0a6c8);
+      color: #fff;
+      box-shadow: 0 10px 28px rgba(232, 121, 169, 0.35);
+    }
+
+    .btn-buy:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 36px rgba(232, 121, 169, 0.45);
+    }
+
+    .faq-item {
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      backdrop-filter: saturate(180%) blur(var(--blur));
+      -webkit-backdrop-filter: saturate(180%) blur(var(--blur));
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.25s var(--ease-out);
+    }
+
+    .faq-item:hover {
+      border-color: rgba(232, 121, 169, 0.25);
+    }
+
+    .faq-item.open {
+      border-color: var(--border-strong);
+    }
+
+    .faq-q {
+      width: 100%;
+      text-align: left;
+      padding: 1rem 1.125rem;
+      background: transparent;
+      border: 0;
+      font: inherit;
+      font-weight: 500;
+      font-size: 0.9375rem;
+      letter-spacing: -0.015em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      color: var(--text);
+    }
+
+    .faq-q span.icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      font-size: 1.125rem;
+      font-weight: 400;
+      line-height: 1;
+      transition: transform 0.35s var(--ease-spring);
+    }
+
+    .faq-item.open .faq-q span.icon { transform: rotate(45deg); }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--ease-out);
+    }
+
+    .faq-a-inner {
+      padding: 0 1.125rem 1.125rem;
+      font-size: 0.9375rem;
+      color: var(--muted);
+      letter-spacing: -0.011em;
+      line-height: 1.5;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 3rem;
+      letter-spacing: -0.01em;
+    }
+
+    .wa-fab {
+      position: fixed;
+      right: max(1rem, env(safe-area-inset-right));
+      bottom: max(1rem, env(safe-area-inset-bottom));
+      z-index: 50;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: var(--whatsapp);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+      transition: transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-out);
+    }
+
+    .wa-fab:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 28px rgba(37, 211, 102, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    }
+
+    .btn i {
+    margin-right: 8px;
+    font-size: 28px;
+    }
+
+    .wa-fab i {
+    font-size: 28px;
+    }
+
+    @media (min-width: 480px) {
+      .wrap {
+        padding-left: max(1.75rem, env(safe-area-inset-left));
+        padding-right: max(1.75rem, env(safe-area-inset-right));
+      }
+    }
+
+    @media (min-width: 960px) {
+      .wrap {
+        max-width: min(var(--max-wide), calc(100vw - 2.5rem));
+        padding-left: max(1.5rem, env(safe-area-inset-left));
+        padding-right: max(1.5rem, env(safe-area-inset-right));
+      }
+
+      .grid-products {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.25rem;
+      }
+
+      .card-title {
+        font-size: 1.0625rem;
+      }
+
+      .card-price {
+        font-size: 1.0625rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <div class="avatar">
+        <!-- Reemplaza src por tu foto real -->
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop" alt="Foto de perfil de Luna Vega" width="400" height="400" loading="eager" />
+      </div>
+      <h1 class="name">Luna Vega</h1>
+      <p class="tagline">Filtros AR · Instagram</p>
+      <p class="bio">
+        Creadora de filtros con estética glow &amp; soft glam. Packs listos para stories, reels y fotos con luz perfecta.
+      </p>
+      <a class="btn btn-ig btn-social" href="https://instagram.com/tuusuario" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a class="btn btn-tiktok btn-social" href="https://tiktok.com/@tuusuario" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+      <a class="btn btn-facebook btn-social" href="https://facebook.com/tuusuario" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+    </header>
+
+    <section aria-labelledby="productos-title">
+      <div class="section-head">
+        <p class="section-eyebrow">Catálogo</p>
+        <h2 id="productos-title" class="section-title">Filtros disponibles</h2>
+      </div>
+      <div class="grid-products" id="products-root"></div>
+    </section>
+
+    <section aria-labelledby="faq-title">
+      <div class="section-head">
+        <p class="section-eyebrow">Soporte</p>
+        <h2 id="faq-title" class="section-title">Preguntas frecuentes</h2>
+      </div>
+      <div class="faq" id="faq">
+        <div class="faq-item">
+          <button type="button" class="faq-q" aria-expanded="false">
+            ¿Cómo recibo el filtro después de pagar?
+            <span class="icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Recibirás las instrucciones de descarga por WhatsApp luego de confirmar el pago.</div></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q" aria-expanded="false">
+            ¿Funciona en iPhone y Android?
+            <span class="icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Sí. Los filtros están optimizados para la app de Instagram en ambos sistemas. Asegúrate de tener la app actualizada.</div></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q" aria-expanded="false">
+            ¿Puedo usarlo en cuentas personales y de marca?
+            <span class="icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Sí, para contenido propio. Si necesitas licencia comercial extendida, escríbeme y te paso las opciones.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">© <span id="y"></span> Luna Vega · Filtros Instagram</p>
+  </main>
+
+  <!-- Cambia el número: código país + número sin + ni espacios -->
+  <a class="wa-fab" href="https://wa.me/595981000000?text=Hola%20Luna%2C%20quiero%20info%20sobre%20tus%20filtros" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+window.supabaseClient = window.supabaseClient || window.supabase.createClient(
+  "https://mgkbfepahlldulvdtvqh.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1na2JmZXBhaGxsZHVsdmR0dnFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5MDQ3MzYsImV4cCI6MjA5NDQ4MDczNn0.P1z-MWnl6jurJczPG1iOo0mJtRQSMQHs_p7oOPcAdOY"
+);
+
+async function loadApp(){
+
+  // 1. BRAND
+  const { data: brand } = await window.supabaseClient
+    .from("brand")
+    .select("*")
+    .single();
+
+  // 2. PRODUCTS
+  const { data: products } = await window.supabaseClient
+    .from("products")
+    .select("*")
+    .eq("active", true)
+    .order("created_at", { ascending:false });
+
+  renderBrand(brand);
+  renderProducts(products);
+  setupWhatsapp(brand?.whatsapp);
+
+}
+
+// ======================
+// BRAND
+// ======================
+function renderBrand(brand){
+
+  if(!brand) return;
+
+  document.querySelector(".name").textContent = brand.name || "";
+  document.querySelector(".tagline").textContent = brand.tagline || "";
+  document.querySelector(".bio").textContent = brand.bio || "";
+  document.querySelector(".avatar img").src = brand.avatar || "";
+
+  document.querySelector(".btn-ig").href = brand.instagram || "#";
+  document.querySelector(".btn-tiktok").href = brand.tiktok || "#";
+  document.querySelector(".btn-facebook").href = brand.facebook || "#";
+}
+
+// ======================
+// PRODUCTS
+// ======================
+function renderProducts(products){
+
+  const root = document.getElementById("products-root");
+  root.innerHTML = "";
+
+  products.forEach((p, index) => {
+
+    const article = document.createElement("article");
+    article.className = "card";
+
+    article.innerHTML = `
+      <div class="card-preview">
+        <img src="${p.image}" alt="${p.name}">
+      </div>
+
+      <div class="card-body">
+        <h3 class="card-title">${p.name}</h3>
+        <p class="card-price">${p.price || ""}</p>
+        <p class="card-desc">${p.description || ""}</p>
+
+        <a class="btn btn-buy" href="checkout.html?id=${p.id}">
+          Comprar ahora
+        </a>
+      </div>
+    `;
+
+    root.appendChild(article);
+
+  });
+}
+
+// ======================
+// WHATSAPP
+// ======================
+function setupWhatsapp(number){
+
+  const wa = document.querySelector(".wa-fab");
+
+  if(!wa || !number) return;
+
+  wa.href = "https://wa.me/" + number;
+}
+
+// INIT
+loadApp();
+</script>
+
+<script>
+
+document.querySelectorAll(".faq-item").forEach(item=>{
+
+  const btn =
+    item.querySelector(".faq-q");
+
+  const answer =
+    item.querySelector(".faq-a");
+
+  btn.addEventListener("click",()=>{
+
+    const isOpen =
+      item.classList.contains("open");
+
+    document
+      .querySelectorAll(".faq-item")
+      .forEach(other=>{
+
+        other.classList.remove("open");
+
+        other
+          .querySelector(".faq-q")
+          .setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+        other
+          .querySelector(".faq-a")
+          .style.maxHeight = null;
+
+      });
+
+    if(!isOpen){
+
+      item.classList.add("open");
+
+      btn.setAttribute(
+        "aria-expanded",
+        "true"
+      );
+
+      answer.style.maxHeight =
+        answer.scrollHeight + "px";
+
+    }
+
+  });
+
+});
+
+</script>
+</body>
+</html>

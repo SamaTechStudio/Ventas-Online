@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checkout · Luna Vega</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #faf7fb;
+      --text: #2b2230;
+      --muted: #6b5f73;
+      --accent: #e879a9;
+      --accent-2: #c9a8e8;
+      --accent-soft: #fce4ef;
+      --border: rgba(43, 34, 48, 0.12);
+      --radius: 20px;
+      --radius-sm: 12px;
+      --wa: #25d366;
+      --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(900px 500px at 50% -15%, #fce4ef 0%, transparent 55%),
+        radial-gradient(600px 400px at 100% 10%, rgba(201, 168, 232, 0.2) 0%, transparent 45%);
+      color: var(--text);
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: max(1.25rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(2rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: clamp(1.35rem, 4vw, 1.85rem);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 40px rgba(43, 34, 48, 0.08);
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+      animation: boxIn 0.65s var(--ease-out) forwards;
+    }
+
+    @keyframes boxIn {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .checkout-head {
+      margin-bottom: 1.35rem;
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(232, 121, 169, 0.12);
+      color: var(--accent);
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 0.65rem;
+    }
+
+    h1 {
+      font-size: clamp(1.35rem, 4vw, 1.5rem);
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin: 0 0 0.4rem;
+    }
+
+    .subtitle {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+      letter-spacing: -0.015em;
+    }
+
+    .section-eyebrow {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin: 0 0 0.5rem;
+    }
+
+    .summary {
+      margin-bottom: 1.5rem;
+    }
+
+    .product-showcase {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, #fce4ef, #efe6fb);
+      opacity: 0;
+      transform: translateY(10px);
+      animation: showcaseIn 0.55s var(--ease-out) 0.1s forwards;
+    }
+
+    @keyframes showcaseIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .product-showcase.no-image .product-img {
+      display: none;
+    }
+
+    .product-img {
+      width: 100%;
+      aspect-ratio: 16 / 12;
+      max-height: 250px;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.04);
+      animation: imgZoom 0.85s var(--ease-out) 0.18s forwards;
+    }
+
+    @keyframes imgZoom {
+      to { transform: scale(1); }
+    }
+
+    .product-meta {
+      padding: 0.85rem 1rem 1rem;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .product-name {
+      font-weight: 600;
+      font-size: 1.0625rem;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .product-name span {
+      color: var(--accent);
+    }
+
+    .product-price {
+      font-weight: 600;
+      font-size: 1.125rem;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+      margin: 0.35rem 0 0.25rem;
+    }
+
+    .product-price[hidden] {
+      display: none;
+    }
+
+    .product-detail {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin: 0.4rem 0 0;
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+    }
+
+    .product-detail:empty {
+      display: none;
+    }
+
+    .summary-points {
+      list-style: none;
+      margin: 0.85rem 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .summary-points li {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
+      line-height: 1.4;
+    }
+
+    .summary-points li::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      margin-top: 0.45em;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+
+    .form-section .section-eyebrow {
+      margin-top: 1.35rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .form-section .section-eyebrow:first-of-type {
+      margin-top: 0;
+    }
+
+    .fields {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .field,
+    .field-cod {
+      position: relative;
+      margin-bottom: 0.75rem;
+    }
+
+    .field-cod {
+      width: min(110px, 100%);
+    }
+
+    .field-label {
+      position: absolute;
+      left: 0.95rem;
+      top: 1.35rem;
+      transform-origin: left top;
+      font-size: 1rem;
+      color: var(--muted);
+      pointer-events: none;
+      transition:
+        transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+        top 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.2s ease,
+        font-size 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      background: #fff;
+      padding: 0 0.25rem;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .field input,
+    .field-cod input {
+      width: 100%;
+      padding: 1.4rem 0.95rem 0.65rem;
+      font: inherit;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.82);
+      outline: none;
+      transition: border-color 0.22s ease, box-shadow 0.25s ease, background 0.22s ease;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+      position: relative;
+      z-index: 1;
+    }
+
+    .field input::placeholder,
+    .field-cod input::placeholder {
+      color: transparent;
+    }
+
+    .field:focus-within .field-label,
+    .field.has-value .field-label,
+    .field-cod:focus-within .field-label,
+    .field-cod.has-value .field-label {
+      top: 0.48rem;
+      transform: translateY(0) scale(0.82);
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+
+    .field:focus-within input,
+    .field-cod:focus-within input {
+      border-color: rgba(232, 121, 169, 0.75);
+      box-shadow: 0 0 0 3px rgba(232, 121, 169, 0.16);
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      box-shadow: inset 0 0 0 1px rgba(43, 34, 48, 0.12), inset 0 0 0 100px rgba(255, 255, 255, 0.82);
+      transition: background-color 5000s ease-in-out 0s;
+      animation-name: onAutoFillStart;
+      animation-duration: 0.01s;
+    }
+
+    @keyframes onAutoFillStart {
+      from { opacity: 1; }
+      to { opacity: 1; }
+    }
+
+    .phone-group {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      gap: 0.75rem;
+      width: 100%;
+      margin-top: 0.25rem;
+    }
+
+    .phone-group .field-cod {
+      flex: 0 0 5.4rem;
+      min-width: 4.8rem;
+      max-width: 6.2rem;
+    }
+
+    .phone-group .field {
+      flex: 1 1 1px;
+      min-width: 0;
+    }
+
+    .phone-group .field-cod input,
+    .phone-group .field input {
+      padding-left: 0.85rem;
+      padding-right: 0.85rem;
+    }
+
+    @media (max-width: 680px) {
+      .phone-group {
+        gap: 0.55rem;
+      }
+
+      .phone-group .field-cod {
+        flex: 0 0 4.8rem;
+        min-width: 4.5rem;
+      }
+
+      .field input,
+      .field-cod input {
+        padding: 1rem 0.75rem 0.6rem;
+      }
+    }
+
+    .bank-details {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-14px);
+      transition: max-height 0.35s var(--ease-out), opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+    }
+
+    .bank-details.active {
+      max-height: 1200px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .bank-card {
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(232, 121, 169, 0.24);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 1rem;
+      display: grid;
+      gap: 0.75rem;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.85);
+    }
+
+    .bank-card-title {
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .bank-card-meta {
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .bank-card-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      align-items: flex-start;
+      font-size: 0.93rem;
+      color: var(--muted);
+    }
+
+    .bank-card-row strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .bank-card-note {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .upload-card {
+      border-radius: var(--radius-sm);
+      border: 1px dashed rgba(43, 34, 48, 0.18);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1rem;
+      transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .upload-card.dragover {
+      border-color: rgba(232, 121, 169, 0.75);
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0 8px 20px rgba(232, 121, 169, 0.12);
+    }
+
+    .upload-card input {
+      display: none;
+    }
+
+    .upload-label {
+      display: block;
+      text-align: center;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .upload-label strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .upload-note {
+      display: block;
+      margin-top: 0.35rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .upload-preview {
+      margin-top: 0.85rem;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .preview-card {
+      position: relative;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.92);
+      padding: 0.75rem;
+      box-shadow: inset 0 0 0 1px rgba(43, 34, 48, 0.08);
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .preview-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .preview-card {
+      min-width: 0;
+    }
+
+    .preview-remove {
+      border: 0;
+      background: rgba(222, 61, 91, 0.12);
+      color: #de3d5b;
+      border-radius: 999px;
+      cursor: pointer;
+      padding: 0.45rem 0.8rem;
+      font-size: 0.82rem;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .preview-remove:hover {
+      background: rgba(222, 61, 91, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .upload-preview img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      opacity: 0;
+      transform: translateY(10px);
+      animation: previewIn 0.28s var(--ease-out) forwards;
+    }
+
+    .upload-preview p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .upload-preview span {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* success modal removed: checkout redirects to WhatsApp */
+
+    .field.input-error input,
+    .field-cod.input-error input {
+      border-color: #de3d5b !important;
+    }
+
+    .field.input-error .field-label,
+    .field-cod.input-error .field-label {
+      color: #de3d5b !important;
+    }
+
+    .field.input-error .upload-card {
+      border-color: #de3d5b !important;
+    }
+
+    .field.input-error .upload-label {
+      color: #de3d5b !important;
+    }
+
+    .error-message {
+      display: block;
+      margin-top: 0.45rem;
+      min-height: 1.2rem;
+      font-size: 0.8125rem;
+      color: #de3d5b;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    @keyframes previewIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 620px) {
+      .phone-group {
+        gap: 0.55rem;
+        flex-wrap: nowrap;
+      }
+
+      .phone-group .field-cod {
+        flex: 0 0 4.8rem;
+        min-width: 4.5rem;
+      }
+    }
+
+    .field:nth-child(1) input { animation-delay: 0.18s; }
+    .field:nth-child(2) input { animation-delay: 0.24s; }
+    .field:nth-child(3) input { animation-delay: 0.3s; }
+
+    @keyframes fieldRowIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .field:nth-child(1),
+    .field:nth-child(2),
+    .field:nth-child(3) {
+      opacity: 0;
+      animation: fieldWrapIn 0.4s var(--ease-out) forwards;
+    }
+    .field:nth-child(1) { animation-delay: 0.14s; }
+    .field:nth-child(2) { animation-delay: 0.2s; }
+    .field:nth-child(3) { animation-delay: 0.26s; }
+
+    @keyframes fieldWrapIn {
+      to { opacity: 1; }
+    }
+
+    .payment-group {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      min-width: 0;
+    }
+
+    .payment-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .payment-card {
+      display: block;
+      width: 100%;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .payment-card input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .payment-card-body {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      width: 100%;
+      padding: 1rem 1.05rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: #fff;
+      box-sizing: border-box;
+      transition: border-color 0.2s ease, box-shadow 0.25s ease;
+    }
+
+    .payment-card-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .payment-card:hover .payment-card-body {
+      border-color: rgba(232, 121, 169, 0.28);
+    }
+
+    .payment-card input:focus-visible + .payment-card-body {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .payment-card input:checked + .payment-card-body {
+      border-color: rgba(232, 121, 169, 0.55);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .payment-card--wa input:checked + .payment-card-body {
+      border-color: rgba(37, 211, 102, 0.45);
+      box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.14);
+    }
+
+    .payment-card-title {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: var(--text);
+    }
+
+    .payment-card-desc {
+      display: block;
+      font-size: 0.8125rem;
+      color: var(--muted);
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+    }
+
+    .payment-card-indicator {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(43, 34, 48, 0.18);
+      background: #fff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .payment-card input:checked + .payment-card-body .payment-card-indicator {
+      border-color: var(--accent);
+      background: var(--accent);
+      box-shadow: inset 0 0 0 5px #fff;
+    }
+
+    .payment-card--wa input:checked + .payment-card-body .payment-card-indicator {
+      border-color: var(--wa);
+      background: var(--wa);
+      box-shadow: inset 0 0 0 5px #fff;
+    }
+
+    .actions {
+      margin-top: 1.1rem;
+      opacity: 0;
+      animation: fieldWrapIn 0.45s var(--ease-out) 0.36s forwards;
+    }
+
+    .btn-cta {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      min-height: 52px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      letter-spacing: -0.02em;
+      transition: transform 0.2s var(--ease), box-shadow 0.25s ease, filter 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn-cta:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    .btn-cta:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      background: #e8e6ea;
+      color: var(--muted);
+      box-shadow: none;
+    }
+
+    .btn-cta--bancard {
+      background: linear-gradient(135deg, var(--accent), #f0a6c8);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(232, 121, 169, 0.35);
+    }
+
+    .btn-cta--bancard:hover:not(:disabled) {
+      filter: brightness(1.03);
+      box-shadow: 0 10px 28px rgba(232, 121, 169, 0.42);
+    }
+
+    .btn-cta--wa {
+      background: linear-gradient(180deg, #2fe677, var(--wa));
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+    }
+
+    .btn-cta--wa:hover:not(:disabled) {
+      filter: brightness(1.04);
+      box-shadow: 0 10px 28px rgba(37, 211, 102, 0.42);
+    }
+
+    .form-foot {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin: 0.85rem 0 0;
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .box,
+      .product-showcase,
+      .product-img,
+      .field,
+      .field input,
+      .actions {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    @media (min-width: 900px) {
+    .box {
+        max-width: 720px;
+    }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <header class="checkout-head">
+      <span class="pill">Checkout seguro</span>
+      <h1>Casi listo</h1>
+      <p class="subtitle">Revisa tu filtro, completa tus datos y realiza el pago.</p>
+    </header>
+
+    <section class="summary" aria-labelledby="summary-eyebrow">
+      <p id="summary-eyebrow" class="section-eyebrow">Tu pedido</p>
+      <div class="product-showcase no-image" id="productShowcase">
+        <img class="product-img" id="productImg" src="" alt="" width="800" height="500" loading="eager" />
+        <div class="product-meta">
+          <p class="product-name" id="productName"></p>
+          <p class="product-price" id="productPrice" hidden></p>
+          <p class="product-detail" id="productDetail"></p>
+        </div>
+      </div>
+      <ul class="summary-points" aria-hidden="true">
+        <li>Entrega digital: instrucciones al confirmar el pago.</li>
+        <li>Soporte por WhatsApp para la descarga del filtro.</li>
+        <li>Pago con tarjeta por transferencia.</li>
+      </ul>
+    </section>
+
+    <section class="form-section" aria-labelledby="datos-eyebrow">
+      <p id="datos-eyebrow" class="section-eyebrow">Tus datos</p>
+      <form class="fields" id="checkoutForm" novalidate>
+        <div class="field" data-field>
+          <input type="text" id="name" name="name" autocomplete="name" placeholder=" " required />
+          <label class="field-label" for="name">Nombre completo</label>
+          <small class="error-message" aria-live="polite"></small>
+        </div>
+        <div class="field" data-field>
+          <input type="email" id="email" name="email" autocomplete="email" placeholder=" " required />
+          <label class="field-label" for="email">Correo electrónico</label>
+          <small class="error-message" aria-live="polite"></small>
+        </div>
+
+          <p id="payment-label" class="section-eyebrow">Datos bancarios</p>
+
+        <div class="bank-details active" id="bankDetails">
+          <div class="bank-card" id="bankInfoContainer"></div>
+          </div>
+
+        <div class="actions">
+          <button type="submit" class="btn-cta btn-cta--wa" id="submitBtn" disabled>Completa tus datos</button>
+          <p class="form-foot">Tus datos solo se usan para esta compra y el envío del filtro. No compartimos tu información con terceros.</p>
+        </div>
+      </form>
+    </section>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    const SUPABASE_URL = 'https://mgkbfepahlldulvdtvqh.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1na2JmZXBhaGxsZHVsdmR0dnFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5MDQ3MzYsImV4cCI6MjA5NDQ4MDczNn0.P1z-MWnl6jurJczPG1iOo0mJtRQSMQHs_p7oOPcAdOY';
+    window.supabaseClient = window.supabaseClient || window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    let BANK_INFO = null;
+    let WHATSAPP_DESTINATION = '';
+
+    async function initCheckout() {
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get('id');
+      if (!productId) {
+        alert('Producto no especificado.');
+        return;
+      }
+
+      try {
+        const [brandResult, bankResult, productResult] = await Promise.all([
+          window.supabaseClient.from('brand').select('*').maybeSingle(),
+          window.supabaseClient.from('bank_info').select('*').maybeSingle(),
+          window.supabaseClient.from('products').select('*').eq('id', productId).maybeSingle()
+        ]);
+
+        if (brandResult.error || bankResult.error || productResult.error) {
+          throw new Error(
+            brandResult.error?.message || bankResult.error?.message || productResult.error?.message || 'Error cargando datos desde Supabase.'
+          );
+        }
+
+        const brand = brandResult.data;
+        const bank = bankResult.data;
+        const product = productResult.data;
+
+        if (!product) {
+          alert('Producto no encontrado.');
+          return;
+        }
+
+        WHATSAPP_DESTINATION = brand?.whatsapp ?? '';
+        BANK_INFO = bank ?? null;
+        renderCheckout(product);
+      } catch (error) {
+        console.error(error);
+        alert('No se pudieron cargar los datos del checkout.');
+      }
+    }
+
+
+    // Renderiza la tarjeta de producto y configura el formulario con los datos cargados.
+    function renderCheckout(product) {
+      const productShowcase = document.getElementById('productShowcase');
+      const productImg = document.getElementById('productImg');
+      const priceEl = document.getElementById('productPrice');
+      const detailEl = document.getElementById('productDetail');
+
+      document.title = 'Checkout · ' + (product?.name ?? 'Producto');
+      productShowcase.classList.toggle('no-image', !product?.image);
+
+      if (product?.image) {
+        productImg.src = product.image;
+        productImg.alt = 'Imagen de ' + (product?.name ?? 'producto');
+      } else {
+        productImg.src = '';
+        productImg.alt = '';
+      }
+
+      document.getElementById('productName').innerHTML =
+        'Filtro <span>' + escapeHtml(product?.name ?? 'Producto') + '</span>';
+
+      if (product?.price) {
+        priceEl.textContent = product.price;
+        priceEl.hidden = false;
+      } else {
+        priceEl.textContent = '';
+        priceEl.hidden = true;
+      }
+
+      detailEl.textContent = product?.description ?? '';
+      renderBankInfo();
+      setupForm(product);
+    }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      // Muestra los datos bancarios en el checkout y maneja la ausencia de información.
+    function renderBankInfo() {
+        if (!bankInfoContainer) {
+          return;
+        }
+
+        if (!BANK_INFO) {
+          bankInfoContainer.innerHTML =
+            '<p class="bank-card-note">No hay datos bancarios disponibles.</p>';
+          return;
+        }
+
+        bankInfoContainer.innerHTML =
+          '<p class="bank-card-title">Datos bancarios</p>' +
+          '<div class="bank-card-meta">' +
+          '<div class="bank-card-row"><span>Banco</span><strong>' + escapeHtml(BANK_INFO.bank ?? '') + '</strong></div>' +
+          '<div class="bank-card-row"><span>Titular</span><strong>' + escapeHtml(BANK_INFO.holder ?? '') + '</strong></div>' +
+          '<div class="bank-card-row"><span>Cuenta</span><strong>' + escapeHtml(BANK_INFO.account ?? '') + '</strong></div>' +
+          '<div class="bank-card-row"><span>Alias</span><strong>' + escapeHtml(BANK_INFO.alias ?? '') + '</strong></div>' +
+          '<div class="bank-card-row"><span>Moneda</span><strong>' + escapeHtml(BANK_INFO.currency ?? '') + '</strong></div>' +
+          '</div>' +
+          '<p class="bank-card-note">' + escapeHtml(BANK_INFO.instructions ?? '') + '</p>';
+      }
+
+      function syncField(el) {
+        var wrap = el.closest("[data-field]");
+        if (!wrap) return;
+        if (el.id === "countryCode") {
+          wrap.classList.toggle("has-value", el.value.trim().length > 1);
+        } else {
+          wrap.classList.toggle("has-value", el.value.trim() !== "");
+        }
+      }
+
+      var form = document.getElementById("checkoutForm");
+      var nameInput = document.getElementById("name");
+      var emailInput = document.getElementById("email");
+      var bankDetails = document.getElementById("bankDetails");
+      var bankInfoContainer = document.getElementById("bankInfoContainer");
+      var submitBtn = document.getElementById("submitBtn");
+
+      function showError(input, message) {
+        var field = input.closest(".field") || input.closest(".field-cod");
+        if (!field) return;
+        field.classList.add("input-error");
+        input.setAttribute("aria-invalid", "true");
+        var error = field.querySelector(".error-message");
+        if (!error) {
+          error = document.createElement("small");
+          error.className = "error-message";
+          error.setAttribute("aria-live", "polite");
+          field.appendChild(error);
+        }
+        error.textContent = message;
+      }
+
+      function clearError(input) {
+        var field = input.closest(".field") || input.closest(".field-cod");
+        if (!field) return;
+        field.classList.remove("input-error");
+        input.removeAttribute("aria-invalid");
+        var error = field.querySelector(".error-message");
+        if (error) {
+          error.textContent = "";
+        }
+      }
+
+      function validateName() {
+        var value = nameInput.value.trim();
+        if (value.length < 3 || /^\s*$/.test(value)) {
+          showError(nameInput, "Ingresa tu nombre completo (mínimo 3 caracteres).");
+          return false;
+        }
+        clearError(nameInput);
+        return true;
+      }
+
+      function validateEmail() {
+        var value = emailInput.value.trim();
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(value)) {
+          showError(emailInput, "Ingresa un correo electrónico válido.");
+          return false;
+        }
+        clearError(emailInput);
+        return true;
+      }
+
+      function validateField(input) {
+        if (input === nameInput) return validateName();
+        if (input === emailInput) return validateEmail();
+        return true;
+      }
+
+      function focusFirstError() {
+        var invalidField = form.querySelector(".input-error");
+        if (!invalidField) return;
+        var focusTarget = invalidField.querySelector("input, textarea, select");
+        if (!focusTarget) return;
+        focusTarget.focus({ preventScroll: true });
+        focusTarget.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      function validateForm() {
+        var nameValid = validateName();
+        var emailValid = validateEmail();
+        return nameValid && emailValid;
+      }
+
+      function isValidNameValue(value) {
+        return typeof value === "string" && value.trim().length >= 3 && !/^\s*$/.test(value);
+      }
+
+      function isValidEmailValue(value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
+      }
+
+      function canSubmit() {
+        return isValidNameValue(nameInput.value) && isValidEmailValue(emailInput.value);
+      }
+
+      function setLoading(isLoading) {
+        if (isLoading) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Procesando...";
+          submitBtn.classList.add("loading");
+        } else {
+          submitBtn.classList.remove("loading");
+          updateSubmitButton();
+        }
+      }
+
+      function handleEnterAsTab(event) {
+        if (event.key !== "Enter") return;
+        var el = event.target;
+        if (!el || el.tagName.toLowerCase() !== "input") return;
+        var type = el.type;
+        if (["radio", "file", "submit", "button", "checkbox"].indexOf(type) !== -1) return;
+
+        event.preventDefault();
+        var focusable = Array.from(form.querySelectorAll("input, select, textarea, button"))
+          .filter(function (item) {
+            if (item.disabled || item.type === "hidden" || item.tabIndex < 0) return false;
+            if (item.type === "radio" || item.type === "file" || item.type === "submit" || item.type === "button") return false;
+            if (item.closest("[hidden]")) return false;
+            return item.offsetParent !== null;
+          });
+
+        var currentIndex = focusable.indexOf(el);
+        var next = focusable[currentIndex + 1];
+        if (next) {
+          next.focus();
+        } else {
+          form.requestSubmit();
+        }
+      }
+
+      function resetCheckout() {
+        form.reset();
+        document.querySelectorAll("[data-field]").forEach(function (field) {
+          field.classList.remove("has-value", "input-error");
+          var input = field.querySelector("input");
+          if (input) {
+            input.removeAttribute("aria-invalid");
+          }
+        });
+        requestAnimationFrame(function () {
+          document.querySelectorAll("[data-field] input").forEach(syncField);
+        });
+        handlePaymentChange();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function toggleBankDetails(show) {
+        if (show) {
+          bankDetails.hidden = false;
+          bankDetails.setAttribute("aria-hidden", "false");
+          bankDetails.setAttribute("aria-expanded", "true");
+          requestAnimationFrame(function () {
+            bankDetails.classList.add("active");
+          });
+        } else {
+          bankDetails.classList.remove("active");
+          bankDetails.setAttribute("aria-hidden", "true");
+          bankDetails.setAttribute("aria-expanded", "false");
+          setTimeout(function () {
+            if (!bankDetails.classList.contains("active")) {
+              bankDetails.hidden = true;
+            }
+          }, 360);
+        }
+      }
+
+      document.querySelectorAll("[data-field] input").forEach(function (input) {
+        syncField(input);
+        ["input", "change", "focus", "blur"].forEach(function (eventName) {
+          input.addEventListener(eventName, function () {
+            syncField(input);
+          });
+        });
+      });
+
+      document.addEventListener("animationstart", function (event) {
+        if (event.animationName !== "onAutoFillStart") return;
+        var input = event.target;
+        if (input && input.matches && input.matches("input")) {
+          syncField(input);
+        }
+      });
+
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          document.querySelectorAll("[data-field] input").forEach(syncField);
+        }, 120);
+      });
+
+      [nameInput, emailInput].forEach(function (input) {
+        input.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            validateField(input);
+          }
+        });
+      });
+
+      renderBankInfo();
+      toggleBankDetails(true);
+
+      form.addEventListener("keydown", handleEnterAsTab);
+
+      emailInput.addEventListener("blur", validateEmail);
+      nameInput.addEventListener("blur", validateName);
+
+      nameInput.addEventListener("input", updateSubmitButton);
+      emailInput.addEventListener("input", updateSubmitButton);
+
+      function updateSubmitButton() {
+        submitBtn.disabled = !canSubmit();
+
+        submitBtn.textContent = canSubmit()
+          ? "Enviar comprobante por WhatsApp"
+          : "Completa tus datos";
+
+        submitBtn.className = "btn-cta btn-cta--wa";
+      }
+
+      // Configura la validación del formulario y el envío a WhatsApp.
+      function setupForm(product) {
+        updateSubmitButton();
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          if (!validateForm()) {
+            focusFirstError();
+            return;
+          }
+
+          setLoading(true);
+
+          if (!WHATSAPP_DESTINATION) {
+            alert('No se configuró el número de WhatsApp.');
+            setLoading(false);
+            return;
+          }
+
+          var name = nameInput.value.trim();
+          var email = emailInput.value.trim();
+
+          var message =
+            "Hola, quiero comprar el siguiente filtro:\n\n" +
+            product.name +
+            (product.price ? "\nPrecio: " + product.price : "") +
+            (product.slug ? "\nReferencia: " + product.slug : "") +
+            "\n\nNombre: " + name +
+            "\nCorreo: " + email +
+            "\n\nAdjunto el comprobante por este chat.";
+
+          var whatsappUrl =
+            "https://wa.me/" +
+            WHATSAPP_DESTINATION +
+            "?text=" +
+            encodeURIComponent(message);
+
+          setTimeout(function () {
+            window.location.href = whatsappUrl;
+          }, 300);
+        });
+      }
+
+      window.addEventListener('DOMContentLoaded', initCheckout);
+  </script>
+</body>
+</html>
