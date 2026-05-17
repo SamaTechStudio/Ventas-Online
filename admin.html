@@ -622,20 +622,14 @@
 </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
   <script>
     const SUPABASE_URL = 'https://mgkbfepahlldulvdtvqh.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1na2JmZXBhaGxsZHVsdmR0dnFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5MDQ3MzYsImV4cCI6MjA5NDQ4MDczNn0.P1z-MWnl6jurJczPG1iOo0mJtRQSMQHs_p7oOPcAdOY';
 
     window.supabaseClient = window.supabaseClient || window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    const ADMIN_SESSION_KEY = "admin_logged";
-
-    document.addEventListener("DOMContentLoaded", async () => {
-      if (localStorage.getItem(ADMIN_SESSION_KEY) === "true") {
-        showAdminPanel();
-      }
     
-      document.getElementById("btnLogin").addEventListener("click", login);
-    });
+    document.getElementById("btnLogin").addEventListener("click", login);
     
     async function login() {
       const username = document.getElementById("username").value.trim();
@@ -665,7 +659,6 @@
         return;
       }
     
-      localStorage.setItem(ADMIN_SESSION_KEY, "true");
       showAdminPanel();
       await loadData();
     }
@@ -675,8 +668,8 @@
       document.getElementById("adminPanel").style.display = "block";
     }
 
-    function logout() {
-      localStorage.removeItem("admin_logged");
+    async function logout() {
+      await window.supabaseClient.auth.signOut();
       location.reload();
     }
 
@@ -1112,17 +1105,18 @@
       window.clearTimeout(modal.dismissTimeout);
     }
 
-   window.addEventListener('DOMContentLoaded', async () => {
+    window.addEventListener("DOMContentLoaded", async () => {
       initEventListeners();
       resetProductForm();
     
-      if (localStorage.getItem("admin_logged") === "true") {
+      const { data } = await window.supabaseClient.auth.getSession();
+    
+      if (data.session) {
         showAdminPanel();
         await loadData();
       }
     });
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
 </body>
 </html>
 
